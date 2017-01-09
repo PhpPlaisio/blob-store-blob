@@ -27,8 +27,8 @@ begin
   for
   select bdt_id
   ,      bdt_data
-  from   NAH_BLOB_DATA2
-  where  1=1 -- cmp_id  = p_cmp_id
+  from   ABC_BLOB_DATA
+  where  cmp_id  = p_cmp_id
   and    bdt_md5 = l_blb_md5
   ;
 
