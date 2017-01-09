@@ -12,7 +12,7 @@ create procedure abc_blob_insert_blob( in p_cmp_id        @abc_blob.cmp_id%type@
                                        in p_blb_filename  @abc_blob.blb_filename%type@,
                                        in p_blb_mime_type @abc_blob.blb_mime_type%type@,
                                        in p_blb_timestamp @abc_blob.blb_timestamp%type@,
-                                       in p_bdt_data      @nah_blob_data2.bdt_data%type@ )
+                                       in p_bdt_data      @abc_blob_data.bdt_data%type@ )
 modifies sql data
 -- type: none
 begin
