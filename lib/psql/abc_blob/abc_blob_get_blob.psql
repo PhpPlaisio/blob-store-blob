@@ -1,0 +1,24 @@
+/**
+ * Selects a BLOB and its metadata.
+ *
+ * @param p_cmp_id The ID of the company (safeguard).
+ * @param p_blb_id The ID of the BLOB.
+ */
+create procedure abc_blob_get_blob( in p_cmp_id @abc_blob.cmp_id%type@,
+                                    in p_blb_id @abc_blob.blb_id%type@ )
+reads sql data
+-- type: row1
+begin
+  select blb.blb_id
+  ,      hex(blb.blb_md5)          blb_md5
+  ,      blb.blb_size
+  ,      blb.blb_filename
+  ,      blb.blb_mime_type
+  ,      blb.blb_timestamp
+  ,      bdt.bdt_data              blb_data
+  from       ABC_BLOB       blb
+  inner join ABC_BLOB_DATA  bdt  on blb.bdt_id = bdt.bdt_id
+  where  blb.blb_id = p_blb_id
+  and    blb.cmp_id = p_cmp_id
+  ;
+end

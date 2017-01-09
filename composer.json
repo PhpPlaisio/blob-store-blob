@@ -1,0 +1,24 @@
+{
+  "name": "setbased/abc-blob-blob-store",
+  "description": "ABC-Framework: BLOB Store using BLOBs",
+  "keywords": [
+    "ABC",
+    "Framework",
+    "BLOB",
+    "Store"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.4.0",
+    "setbased/abc": "*",
+    "setbased/abc-blob-store": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SetBased\\Abc\\": "src/"
+    }
+  }
+}
