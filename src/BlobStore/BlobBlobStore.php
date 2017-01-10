@@ -42,7 +42,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getMetadata($cmpId, $blbId)
   {
-    return Abc::$DL->abcBlobGetMetaData($cmpId, $blbId);
+    return Abc::$DL->abcBlobGetMetadata($cmpId, $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class BlobBlobStore implements BlobStore
     // Get the BLOB data from file.
     $data = file_get_contents($path);
 
-    // Insert the BLOB (data and info) into the database.
+    // Insert the BLOB (data and metadata) into the database.
     Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, null, $data);
 
     return Abc::$DL->abcBlobWorkaround();
@@ -93,6 +93,9 @@ class BlobBlobStore implements BlobStore
    * @param string $path The path to the file.
    *
    * @return string
+   *
+   * @api
+   * @since 1.0.0
    */
   protected function getMimeType($path)
   {
