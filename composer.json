@@ -17,7 +17,7 @@
   },
   "require": {
     "php": ">=5.4.0",
-    "setbased/abc": "*",
+    "setbased/abc": "dev-master",
     "setbased/abc-blob-store": "1.*",
     "setbased/helper-program-execution": "1.*"
   },
