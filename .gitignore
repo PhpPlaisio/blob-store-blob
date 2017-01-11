@@ -1,5 +1,6 @@
 /.idea/
 /bin/
+/doc/
 /vendor/
 /composer.lock
 /test/etc/columns.txt

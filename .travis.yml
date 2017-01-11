@@ -1,0 +1,28 @@
+language: php
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - hhvm
+  - nightly
+  
+sudo: true
+
+addons:
+  mariadb: 5.5
+
+before_install:
+  - mysql --version
+  - mysql -u root < test/ddl/0100_create_database.sql
+  - mysql -u root < test/ddl/0100_create_user.sql
+  - mysql -u root test < test/ddl/0100_create_tables.sql
+  - mysql -u root test < lib/ddl/0100_create_tables.sql
+  - ./bin/stratum stratum test/etc/stratum.cfg
+  
+install:
+  - composer self-update
+  - composer update
+    
+script: 
+  - ./bin/phing unit
