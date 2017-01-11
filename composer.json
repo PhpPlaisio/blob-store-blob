@@ -9,8 +9,6 @@
   ],
   "type": "library",
   "license": "MIT",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "require-dev": {
     "phpunit/phpunit": "*",
     "setbased/php-stratum": "*"
