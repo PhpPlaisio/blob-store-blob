@@ -11,14 +11,30 @@
   "license": "MIT",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "setbased/php-stratum": "*"
+  },
   "require": {
     "php": ">=5.4.0",
     "setbased/abc": "*",
-    "setbased/abc-blob-store": "*"
+    "setbased/abc-blob-store": "1.*",
+    "setbased/helper-program-execution": "1.*"
   },
   "autoload": {
     "psr-4": {
       "SetBased\\Abc\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SetBased\\Abc\\Test\\": "test/"
+    },
+    "classmap": [
+      "test/C.php"
+    ]
+  },
+  "config": {
+    "bin-dir": "bin"
   }
 }

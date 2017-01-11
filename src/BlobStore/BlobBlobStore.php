@@ -3,6 +3,7 @@
 namespace SetBased\Abc\BlobStore;
 
 use SetBased\Abc\Abc;
+use SetBased\Helper\ProgramExecution;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -11,6 +12,13 @@ use SetBased\Abc\Abc;
 class BlobBlobStore implements BlobStore
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Path to the file executable.
+   *
+   * @var string
+   */
+  public static $filePath = '/usr/bin/file';
+
   /**
    * Translation of "wrong" mime types to correct mime types.
    *
@@ -49,7 +57,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putFile($cmpId, $path, $filename, $mimeType = null)
+  public function putFile($cmpId, $path, $filename, $mimeType = null, $timestamp = null)
   {
     // If required determine the mime type of the file.
     if ($mimeType===null)
@@ -61,7 +69,7 @@ class BlobBlobStore implements BlobStore
     $data = file_get_contents($path);
 
     // Insert the BLOB (data and metadata) into the database.
-    Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, null, $data);
+    Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, $timestamp, $data);
 
     return Abc::$DL->abcBlobWorkaround();
   }
@@ -70,9 +78,15 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putString($cmpId, $filename, $mimeType, $data)
+  public function putString($cmpId, $data, $filename, $mimeType, $timestamp = null)
   {
-    Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, null, $data);
+    // If required translate the mime type.
+    if (isset(self::$mimeTypeTranslate[$mimeType]))
+    {
+      $mimeType = self::$mimeTypeTranslate[$mimeType];
+    }
+
+    Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, $timestamp, $data);
 
     return Abc::$DL->abcBlobWorkaround();
   }
@@ -99,7 +113,9 @@ class BlobBlobStore implements BlobStore
    */
   protected function getMimeType($path)
   {
-    $mimeType = mime_content_type($path);
+    list($output) = ProgramExecution::exec1([self::$filePath, '-ib', $path], [0], true);
+
+    $mimeType = $output[0];
 
     // If required translate the mime type.
     if (isset(self::$mimeTypeTranslate[$mimeType]))

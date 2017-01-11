@@ -1,3 +1,9 @@
 /.idea/
+/bin/
 /vendor/
 /composer.lock
+/test/etc/columns.txt
+/test/etc/routines.json
+/test/DataLayer.php
+/test/report/
+/test/coverage.xml

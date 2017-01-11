@@ -1,0 +1,14 @@
+build:
+    tests:
+        before:
+            - mysql --version
+            - mysql -u root test/ddl/0100_create_database.sql
+            - mysql -u root test/ddl/0100_create_table.sql
+            - mysql -u root test/ddl/0100_create_user.sql
+
+        override:
+            -
+                command: './bin/phpunit'
+                coverage:
+                    file: 'test/coverage.xml'
+                    format: 'php-clover'
