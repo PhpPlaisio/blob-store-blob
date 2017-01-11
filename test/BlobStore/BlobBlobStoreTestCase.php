@@ -34,7 +34,7 @@ class BlobBlobStoreTestCase extends \PHPUnit_Framework_TestCase
   {
     Abc::$DL = new DataLayer();
 
-    DataLayer::connect('localhost', 'php_abc_blob_blob_store', 'php_abc_blob_blob_store', 'php_abc_blob_blob_store');
+    DataLayer::connect('localhost', 'test', 'test', 'test');
 
     DataLayer::executeNone('set foreign_key_checks = 0');
     DataLayer::executeNone('truncate table `ABC_BLOB`');
