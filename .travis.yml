@@ -18,11 +18,11 @@ before_install:
   - mysql -u root < test/ddl/0100_create_user.sql
   - mysql -u root test < test/ddl/0100_create_tables.sql
   - mysql -u root test < lib/ddl/0100_create_tables.sql
-  - ./bin/stratum stratum test/etc/stratum.cfg
   
 install:
   - composer self-update
   - composer update
+  - ./bin/stratum stratum test/etc/stratum.cfg
     
 script: 
   - ./bin/phing unit
