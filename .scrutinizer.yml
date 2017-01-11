@@ -2,9 +2,11 @@ build:
     tests:
         before:
             - mysql --version
-            - mysql -u root test/ddl/0100_create_database.sql
-            - mysql -u root test/ddl/0100_create_table.sql
-            - mysql -u root test/ddl/0100_create_user.sql
+            - mysql -u root < test/ddl/0100_create_database.sql
+            - mysql -u root < test/ddl/0100_create_user.sql
+            - mysql -u root php_abc_blob_blob_store < test/ddl/0100_create_tables.sql
+            - mysql -u root php_abc_blob_blob_store < lib/ddl/0100_create_tables.sql
+            - bin/stratum stratum test/etc/stratum.cfg
 
         override:
             -
