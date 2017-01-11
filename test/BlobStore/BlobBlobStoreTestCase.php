@@ -28,7 +28,7 @@ class BlobBlobStoreTestCase extends \PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Connects to the MySQL server.
+   * Connects to the MySQL server and cleans the BLOB tables.
    */
   protected function setUp()
   {
@@ -43,6 +43,9 @@ class BlobBlobStoreTestCase extends \PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Disconnects from the MySQL server.
+   */
   protected function tearDown()
   {
     DataLayer::disconnect();
