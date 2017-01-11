@@ -1,3 +1,4 @@
-create user 'php_abc_blob_blob_store'@'localhost' identified by 'php_abc_blob_blob_store';
+create user 'test'@'localhost' identified by 'test';
 
-grant all on php_abc_blob_blob_store.*  to 'php_abc_blob_blob_store'@'localhost';
+grant all on test.*  to 'test'@'localhost';
+

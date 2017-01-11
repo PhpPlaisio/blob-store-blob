@@ -1,1 +1,3 @@
-create database if not exists php_abc_blob_blob_store;
+drop database if exists test;
+
+create database test;
