@@ -12,7 +12,9 @@
 
     <!-- Runs all unit tests -->
     <target name="unit">
+        <move file="test/C.txt" tofile="test/C.php" haltonerror="false"/>
         <exec command="bin/phpunit" passthru="true" checkreturn="true"/>
+        <move file="test/C.php" tofile="test/C.txt" haltonerror="true"/>
     </target>
     <target name="build"/>
 </project>
