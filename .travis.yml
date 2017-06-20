@@ -20,7 +20,7 @@ before_install:
   
 install:
   - composer self-update
-  - mv test/C.txt test/C.php
+  - ln -sf C.txt test/C.php
   - composer update
   - ./bin/stratum stratum test/etc/stratum.cfg
     
