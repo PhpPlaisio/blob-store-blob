@@ -2,8 +2,7 @@
   "name": "setbased/abc-blob-store-blob",
   "description": "ABC-Framework: BLOB Store using BLOBs",
   "keywords": [
-    "ABC",
-    "Framework",
+    "ABC-Framework",
     "BLOB",
     "Store"
   ],
@@ -16,7 +15,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "setbased/abc": "^0.9.0",
+    "setbased/abc": "^0.10.0",
     "setbased/abc-blob-store": "^1.0.0",
     "setbased/helper-program-execution": "^1.0.0"
   },
