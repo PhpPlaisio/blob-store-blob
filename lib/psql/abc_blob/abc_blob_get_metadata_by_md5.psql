@@ -4,8 +4,8 @@
  * @param p_cmp_id  The ID of the company (safeguard).
  * @param p_blb_md5 The MD5 hash.
  */
-create procedure abc_blob_get_metadata_by_md5( in p_cmp_id  @abc_blob.cmp_id%type@,
-                                               in p_blb_md5 @abc_blob.blb_md5%type@ )
+create procedure abc_blob_get_metadata_by_md5(in p_cmp_id  @abc_blob.cmp_id%type@,
+                                              in p_blb_md5 varchar(32))
 reads sql data
 -- type: rows
 begin
@@ -16,7 +16,7 @@ begin
   ,      blb_mime_type
   ,      blb_timestamp
   from   ABC_BLOB
-  where  blb_md5 = p_blb_md5
-  and    cmp_id  = p_cmp_id
+  where  cmp_id  = p_cmp_id
+  and    blb_md5 = unhex(p_blb_md5)
   ;
 end
