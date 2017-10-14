@@ -1,4 +1,8 @@
 build:
+    dependencies:
+        before:
+            - cp test/C.txt test/C.php
+
     environment:
         mysql: 5.6
 
@@ -9,11 +13,7 @@ build:
             - mysql -u root < test/ddl/0100_create_user.sql
             - mysql -u root test < test/ddl/0100_create_tables.sql
             - mysql -u root test < lib/ddl/0100_create_tables.sql
-            - mv test/C.txt test/C.php
             - ./bin/stratum stratum test/etc/stratum.cfg
-
-        after:
-            - mv test/C.php test/C.txt
 
         override:
             -
