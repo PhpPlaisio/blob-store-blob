@@ -97,7 +97,7 @@ class BlobBlobStore implements BlobStore
    */
   public function searchByMd5($cmpId, $md5)
   {
-    return Abc::$DL->abcBlobGetMetadataByMd5($cmpId, hex2bin($md5));
+    return Abc::$DL->abcBlobGetMetadataByMd5($cmpId, $md5);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

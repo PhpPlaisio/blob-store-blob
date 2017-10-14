@@ -14,8 +14,13 @@ class C
    *
    * Below this doc block constants will be inserted by PhpStratum.
    */
-  const CMP_ID_ABC = 2;
-  const CMP_ID_SYS = 1;
+  const CMP_ID_ABC      = 2;
+  const CMP_ID_SYS      = 1;
+  const TST_ID_BUNNY    = 3;
+  const TST_ID_CAT      = 4;
+  const TST_ID_EGGS     = 2;
+  const TST_ID_ELEPHANT = 5;
+  const TST_ID_SPAM     = 1;
 
   //--------------------------------------------------------------------------------------------------------------------
 }

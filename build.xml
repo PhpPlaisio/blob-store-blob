@@ -13,6 +13,7 @@
     <!-- Runs all unit tests -->
     <target name="unit">
         <move file="test/C.txt" tofile="test/C.php" haltonerror="false"/>
+        <exec command="bin/stratum stratum test/etc/stratum.cfg" passthru="true" checkreturn="true"/>
         <exec command="bin/phpunit" passthru="true" checkreturn="true"/>
         <move file="test/C.php" tofile="test/C.txt" haltonerror="true"/>
     </target>
