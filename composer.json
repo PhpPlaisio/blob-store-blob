@@ -8,16 +8,17 @@
   ],
   "type": "library",
   "license": "MIT",
+  "require": {
+    "php": ">=7.0.0",
+    "setbased/abc": "^0.10.23",
+    "setbased/abc-blob-store": "^2.0.0",
+    "setbased/helper-program-execution": "^1.0.0"
+  },
   "require-dev": {
     "phing/phing": "^2.0.0",
     "phpunit/phpunit": "^6.0.0",
+    "setbased/abc-company-resolver-uni": "^1.0.0",
     "setbased/php-stratum": "^0.9.50"
-  },
-  "require": {
-    "php": ">=7.0.0",
-    "setbased/abc": "^0.10.0",
-    "setbased/abc-blob-store": "^1.0.0",
-    "setbased/helper-program-execution": "^1.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -33,6 +34,6 @@
     ]
   },
   "config": {
-    "bin-dir": "bin"
+    "bin-dir": "bin/"
   }
 }

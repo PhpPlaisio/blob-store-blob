@@ -5,7 +5,6 @@ namespace SetBased\Abc\BlobStore;
 use SetBased\Abc\Abc;
 use SetBased\Helper\ProgramExecution;
 
-//----------------------------------------------------------------------------------------------------------------------
 /**
  * Class for storing BLOBs (i.e. files, documents, images, data) as BLOBs in the database.
  */
@@ -30,34 +29,34 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function delBlob($cmpId, $blbId)
+  public function delBlob($blbId)
   {
-    Abc::$DL->abcBlobDelBlob($cmpId, $blbId);
+    Abc::$DL->abcBlobDelBlob(Abc::$companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * {@inheritdoc}
    */
-  public function getBlob($cmpId, $blbId)
+  public function getBlob($blbId)
   {
-    return Abc::$DL->abcBlobGetBlob($cmpId, $blbId);
+    return Abc::$DL->abcBlobGetBlob(Abc::$companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * {@inheritdoc}
    */
-  public function getMetadata($cmpId, $blbId)
+  public function getMetadata($blbId)
   {
-    return Abc::$DL->abcBlobGetMetadata($cmpId, $blbId);
+    return Abc::$DL->abcBlobGetMetadata(Abc::$companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * {@inheritdoc}
    */
-  public function putFile($cmpId, $path, $filename, $mimeType = null, $timestamp = null)
+  public function putFile($path, $filename, $mimeType = null, $timestamp = null)
   {
     // If required determine the mime type of the file.
     if ($mimeType===null)
@@ -69,7 +68,7 @@ class BlobBlobStore implements BlobStore
     $data = file_get_contents($path);
 
     // Insert the BLOB (data and metadata) into the database.
-    Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, $timestamp, $data);
+    Abc::$DL->abcBlobInsertBlob(Abc::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
     return Abc::$DL->abcBlobWorkaround();
   }
@@ -78,7 +77,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putString($cmpId, $data, $filename, $mimeType, $timestamp = null)
+  public function putString($data, $filename, $mimeType, $timestamp = null)
   {
     // If required translate the mime type.
     if (isset(self::$mimeTypeTranslate[$mimeType]))
@@ -86,7 +85,7 @@ class BlobBlobStore implements BlobStore
       $mimeType = self::$mimeTypeTranslate[$mimeType];
     }
 
-    Abc::$DL->abcBlobInsertBlob($cmpId, $filename, $mimeType, $timestamp, $data);
+    Abc::$DL->abcBlobInsertBlob(Abc::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
     return Abc::$DL->abcBlobWorkaround();
   }
@@ -95,9 +94,9 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function searchByMd5($cmpId, $md5)
+  public function searchByMd5($md5)
   {
-    return Abc::$DL->abcBlobGetMetadataByMd5($cmpId, $md5);
+    return Abc::$DL->abcBlobGetMetadataByMd5(Abc::$companyResolver->getCmpId(), $md5);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -2,10 +2,11 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Test\BlobStore;
 
+use SetBased\Abc\Abc;
 use SetBased\Abc\BlobStore\BlobBlobStore;
 use SetBased\Abc\C;
+use SetBased\Abc\CompanyResolver\UniCompanyResolver;
 
-//----------------------------------------------------------------------------------------------------------------------
 /**
  * Test cases for BlobBlobStore
  */
@@ -23,18 +24,18 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
 
     if ($method=='putFile')
     {
-      $blb_id = $store->putFile(C::CMP_ID_SYS, __FILE__, basename(__FILE__));
+      $blb_id = $store->putFile(__FILE__, basename(__FILE__));
     }
     else
     {
-      $blb_id = $store->putString(C::CMP_ID_SYS, file_get_contents(__FILE__), basename(__FILE__), 'application/x-php');
+      $blb_id = $store->putString(file_get_contents(__FILE__), basename(__FILE__), 'application/x-php');
     }
 
     // Search by MD5 hash must give 1 row.
-    $this->assertCount(1, $store->searchByMd5(C::CMP_ID_SYS, md5_file(__FILE__)));
+    $this->assertCount(1, $store->searchByMd5(md5_file(__FILE__)));
 
     // Test all fields of getBlob.
-    $blob = $store->getBlob(C::CMP_ID_SYS, $blb_id);
+    $blob = $store->getBlob($blb_id);
     $this->assertEquals(1, $blob['blb_id']);
     $this->assertEquals(md5_file(__FILE__), strtolower($blob['blb_md5']));
     $this->assertEquals(filesize(__FILE__), $blob['blb_size']);
@@ -44,7 +45,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
     $this->assertSame(file_get_contents(__FILE__), $blob['blb_data']);
 
     // Test all fields of getMetaData.
-    $meta_data = $store->getMetadata(C::CMP_ID_SYS, $blb_id);
+    $meta_data = $store->getMetadata($blb_id);
     $this->assertEquals(1, $meta_data['blb_id']);
     $this->assertEquals(md5_file(__FILE__), strtolower($meta_data['blb_md5']));
     $this->assertEquals(filesize(__FILE__), $meta_data['blb_size']);
@@ -65,15 +66,15 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
     $file1 = __DIR__.'/a.php';
     $file2 = __DIR__.'/b.php';
 
-    $blb_id1 = $store->putFile(C::CMP_ID_SYS, $file1, basename($file1));
-    $blb_id2 = $store->putFile(C::CMP_ID_SYS, $file2, basename($file2));
+    $blb_id1 = $store->putFile($file1, basename($file1));
+    $blb_id2 = $store->putFile($file2, basename($file2));
 
     // We expect 2 rows in ABC_BLOB and ABC_BLOB_DATA.
     $this->assertEquals($this->getBlobCount(), 2, 'ABC_BLOB');
     $this->assertEquals($this->getBlobDataCount(), 2, 'ABC_BLOB_DATA');
 
-    $blob1 = $store->getBlob(C::CMP_ID_SYS, $blb_id1);
-    $blob2 = $store->getBlob(C::CMP_ID_SYS, $blb_id2);
+    $blob1 = $store->getBlob($blb_id1);
+    $blob2 = $store->getBlob($blb_id2);
 
     // Hashes must be equal but data not.
     $this->assertSame($blob1['blb_md5'], $blob2['blb_md5']);
@@ -84,7 +85,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
     $this->assertSame(file_get_contents($file2), $blob2['blb_data']);
 
     // Search by MD5 hash must give 2 rows.
-    $this->assertCount(2, $store->searchByMd5(C::CMP_ID_SYS, $blob1['blb_md5']));
+    $this->assertCount(2, $store->searchByMd5($blob1['blb_md5']));
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -95,8 +96,9 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   {
     $store = new BlobBlobStore();
 
-    $store->putFile(C::CMP_ID_SYS, __FILE__, basename(__FILE__));
-    $store->putFile(C::CMP_ID_ABC, __FILE__, basename(__FILE__));
+    $store->putFile(__FILE__, basename(__FILE__));
+    Abc::$companyResolver = new UniCompanyResolver(C::CMP_ID_ABC);
+    $store->putFile(__FILE__, basename(__FILE__));
 
     $this->assertEquals($this->getBlobCount(), 2, 'ABC_BLOB');
     $this->assertEquals($this->getBlobDataCount(), 2, 'ABC_BLOB_DATA');
@@ -110,10 +112,10 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   {
     $store = new BlobBlobStore();
 
-    $blb_id = $store->putFile(C::CMP_ID_SYS, __FILE__, basename(__FILE__));
+    $blb_id = $store->putFile(__FILE__, basename(__FILE__));
     $this->assertEquals($this->getBlobCount(), 1, 'ABC_BLOB');
 
-    $store->delBlob(C::CMP_ID_SYS, $blb_id);
+    $store->delBlob($blb_id);
     $this->assertEquals($this->getBlobCount(), 0, 'ABC_BLOB');
   }
 
@@ -125,9 +127,9 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   {
     $store = new BlobBlobStore();
 
-    $blb_id = $store->putString(C::CMP_ID_SYS, '%PDF-1.1', 'test.pdf', 'application/x-pdf');
+    $blb_id = $store->putString('%PDF-1.1', 'test.pdf', 'application/x-pdf');
 
-    $blob = $store->getMetadata(C::CMP_ID_SYS, $blb_id);
+    $blob = $store->getMetadata($blb_id);
 
     $this->assertSame('application/pdf', $blob['blb_mime_type']);
   }
@@ -140,8 +142,8 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   {
     $store = new BlobBlobStore();
 
-    $store->putFile(C::CMP_ID_SYS, __FILE__, basename(__FILE__));
-    $store->putFile(C::CMP_ID_SYS, __FILE__, basename(__FILE__));
+    $store->putFile(__FILE__, basename(__FILE__));
+    $store->putFile(__FILE__, basename(__FILE__));
 
     $this->assertEquals($this->getBlobCount(), 2, 'ABC_BLOB');
     $this->assertEquals($this->getBlobDataCount(), 1, 'ABC_BLOB_DATA');
