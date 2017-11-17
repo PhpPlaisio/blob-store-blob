@@ -6,6 +6,7 @@ build:
     environment:
         mysql: 5.7
 
+    tests:
         override:
             -
                 command: './bin/phing unit'
