@@ -1,11 +1,11 @@
 /*================================================================================*/
 /* DDL SCRIPT                                                                     */
 /*================================================================================*/
-/*  Title    :                                                                    */
-/*  FileName : abc-blob.ecm                                                       */
+/*  Title    : ABC-Framework: BLOB Store using BLOBs                              */
+/*  FileName : abc-blob-store-blob.ecm                                            */
 /*  Platform : MySQL 5.6                                                          */
-/*  Version  : Concept                                                            */
-/*  Date     : woensdag 11 januari 2017                                           */
+/*  Version  :                                                                    */
+/*  Date     : zaterdag 25 november 2017                                          */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -90,4 +90,4 @@ CREATE INDEX `IX_FK_ABC_BLOB1` ON `ABC_BLOB` (`bdt_id`);
 
 ALTER TABLE `ABC_BLOB`
   ADD CONSTRAINT `FK_ABC_BLOB_AUT_COMPANY`
-  FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`);
+  FOREIGN KEY (`cmp_id`) REFERENCES `ABC_AUTH_COMPANY` (`cmp_id`);

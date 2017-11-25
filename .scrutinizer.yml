@@ -1,16 +1,12 @@
 build:
+    dependencies:
+        before:
+            - cp test/C.txt test/C.php
+
     environment:
-        mysql: 5.6
+        mysql: 5.7
 
     tests:
-        before:
-            - mysql --version
-            - mysql -u root < test/ddl/0100_create_database.sql
-            - mysql -u root < test/ddl/0100_create_user.sql
-            - mysql -u root test < test/ddl/0100_create_tables.sql
-            - mysql -u root test < lib/ddl/0100_create_tables.sql
-            - ./bin/stratum stratum test/etc/stratum.cfg
-
         override:
             -
                 command: './bin/phing unit'
