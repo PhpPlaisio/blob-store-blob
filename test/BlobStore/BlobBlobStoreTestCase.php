@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\Test\BlobStore;
 
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use SetBased\Abc\C;
 use SetBased\Abc\CompanyResolver\UniCompanyResolver;
 use SetBased\Abc\Test\DataLayer;
 
-//----------------------------------------------------------------------------------------------------------------------
+
 class BlobBlobStoreTestCase extends TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------

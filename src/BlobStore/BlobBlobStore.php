@@ -1,5 +1,5 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+
 namespace SetBased\Abc\BlobStore;
 
 use SetBased\Abc\Abc;
@@ -26,10 +26,11 @@ class BlobBlobStore implements BlobStore
   public static $mimeTypeTranslate = ['application/x-pdf' => 'application/pdf'];
 
   //--------------------------------------------------------------------------------------------------------------------
+
   /**
    * {@inheritdoc}
    */
-  public function delBlob($blbId)
+  public function delBlob(int $blbId): void
   {
     Abc::$DL->abcBlobDelBlob(Abc::$companyResolver->getCmpId(), $blbId);
   }
@@ -38,7 +39,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function getBlob($blbId)
+  public function getBlob(int $blbId): array
   {
     return Abc::$DL->abcBlobGetBlob(Abc::$companyResolver->getCmpId(), $blbId);
   }
@@ -47,7 +48,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function getMetadata($blbId)
+  public function getMetadata(int $blbId): array
   {
     return Abc::$DL->abcBlobGetMetadata(Abc::$companyResolver->getCmpId(), $blbId);
   }
@@ -56,7 +57,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putFile($path, $filename, $mimeType = null, $timestamp = null)
+  public function putFile(string $path, string $filename, ?string $mimeType = null, string $timestamp = null): int
   {
     // If required determine the mime type of the file.
     if ($mimeType===null)
@@ -77,7 +78,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putString($data, $filename, $mimeType, $timestamp = null)
+  public function putString(string $data, string $filename, string $mimeType, ?string $timestamp = null): int
   {
     // If required translate the mime type.
     if (isset(self::$mimeTypeTranslate[$mimeType]))
@@ -94,7 +95,7 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function searchByMd5($md5)
+  public function searchByMd5(string $md5): array
   {
     return Abc::$DL->abcBlobGetMetadataByMd5(Abc::$companyResolver->getCmpId(), $md5);
   }
@@ -110,7 +111,7 @@ class BlobBlobStore implements BlobStore
    * @api
    * @since 1.0.0
    */
-  protected function getMimeType($path)
+  protected function getMimeType(string $path): string
   {
     list($output) = ProgramExecution::exec1([self::$filePath, '-ib', $path], [0], true);
 
