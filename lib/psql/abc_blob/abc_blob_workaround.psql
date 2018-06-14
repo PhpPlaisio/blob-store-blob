@@ -3,7 +3,8 @@
  */
 create procedure abc_blob_workaround()
 modifies sql data
--- type: singleton1
+-- type:   singleton1
+-- return: int
 begin
   select @blb_id;
 end
