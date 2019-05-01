@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SetBased\Abc\Test\BlobStore;
 
@@ -18,7 +19,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
    *
    * @param string $method Either putFile or putString.
    */
-  public function baseStoreAndRetrieve($method)
+  public function baseStoreAndRetrieve(string $method): void
   {
     $store = new BlobBlobStore();
 
@@ -58,7 +59,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test storing files with MD5 collision.
    */
-  public function testCollision()
+  public function testCollision(): void
   {
     $store = new BlobBlobStore();
 
@@ -92,7 +93,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test storing twice the same for different companies will not use the same BLOB.
    */
-  public function testCompanySeparation()
+  public function testCompanySeparation(): void
   {
     $store = new BlobBlobStore();
 
@@ -108,7 +109,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test storing and deleting.
    */
-  public function testDelBlob()
+  public function testDelBlob(): void
   {
     $store = new BlobBlobStore();
 
@@ -123,7 +124,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test mime type translation for method putString.
    */
-  public function testMimeTypeTranslationPutString()
+  public function testMimeTypeTranslationPutString(): void
   {
     $store = new BlobBlobStore();
 
@@ -138,7 +139,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test storing twice the same file must reuse the same BLOB.
    */
-  public function testReUsage()
+  public function testReUsage(): void
   {
     $store = new BlobBlobStore();
 
@@ -153,7 +154,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test storing and retrieving.
    */
-  public function testStoreAndRetrieveFile()
+  public function testStoreAndRetrieveFile(): void
   {
     $this->baseStoreAndRetrieve('putFile');
   }
@@ -162,7 +163,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   /**
    * Test storing and retrieving.
    */
-  public function testStoreAndRetrieveString()
+  public function testStoreAndRetrieveString(): void
   {
     $this->baseStoreAndRetrieve('putString');
   }
