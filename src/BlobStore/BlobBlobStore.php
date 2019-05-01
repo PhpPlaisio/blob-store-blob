@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SetBased\Abc\BlobStore;
 
@@ -26,7 +27,6 @@ class BlobBlobStore implements BlobStore
   public static $mimeTypeTranslate = ['application/x-pdf' => 'application/pdf'];
 
   //--------------------------------------------------------------------------------------------------------------------
-
   /**
    * {@inheritdoc}
    */
