@@ -20,11 +20,11 @@ class BlobBlobStore implements BlobStore
   public static $filePath = '/usr/bin/file';
 
   /**
-   * Translation of "wrong" mime types to correct mime types.
+   * Directory for storing temporary files. If null sys_get_temp_dir() will be used.
    *
-   * @var array
+   * @var ?string
    */
-  public static $mimeTypeTranslate = ['application/x-pdf' => 'application/pdf'];
+  public static $tmpDir = null;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -57,18 +57,51 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putFile(string $path, string $filename, ?string $mimeType = null, string $timestamp = null): int
+  public function mimeTypePath(string $path): string
   {
-    // If required determine the mime type of the file.
-    if ($mimeType===null)
+    list($output) = ProgramExecution::exec1([self::$filePath, '-ib', $path], [0], true);
+
+    $mimeType = $output[0];
+
+    return $mimeType;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  public function mimeTypeString(string $data): string
+  {
+    $path   = tempnam(static::$tmpDir ?? sys_get_temp_dir(), 'mime-');
+    $handle = fopen($path, 'wb');
+    fwrite($handle, $data);
+    fclose($handle);
+
+    try
     {
-      $mimeType = $this->getMimeType($path);
+      $mimeType = $this->mimeTypePath($path);
+    }
+    finally
+    {
+      unlink($path);
     }
 
-    // Get the BLOB data from file.
+    return $mimeType;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  public function putFile(string $path, string $filename, ?string $mimeType = null, ?string $timestamp = null): int
+  {
+    if ($mimeType===null)
+    {
+      $mimeType = $this->mimeTypePath($path);
+    }
+
     $data = file_get_contents($path);
 
-    // Insert the BLOB (data and metadata) into the database.
     Abc::$DL->abcBlobInsertBlob(Abc::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
     return Abc::$DL->abcBlobWorkaround();
@@ -78,12 +111,11 @@ class BlobBlobStore implements BlobStore
   /**
    * {@inheritdoc}
    */
-  public function putString(string $data, string $filename, string $mimeType, ?string $timestamp = null): int
+  public function putString(string $data, string $filename, ?string $mimeType = null, ?string $timestamp = null): int
   {
-    // If required translate the mime type.
-    if (isset(self::$mimeTypeTranslate[$mimeType]))
+    if ($mimeType===null)
     {
-      $mimeType = self::$mimeTypeTranslate[$mimeType];
+      $mimeType = $this->mimeTypeString($data);
     }
 
     Abc::$DL->abcBlobInsertBlob(Abc::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
@@ -99,34 +131,6 @@ class BlobBlobStore implements BlobStore
   {
     return Abc::$DL->abcBlobGetMetadataByMd5(Abc::$companyResolver->getCmpId(), $md5);
   }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns the mime type of a file.
-   *
-   * @param string $path The path to the file.
-   *
-   * @return string
-   *
-   * @api
-   * @since 1.0.0
-   */
-  protected function getMimeType(string $path): string
-  {
-    list($output) = ProgramExecution::exec1([self::$filePath, '-ib', $path], [0], true);
-
-    $mimeType = $output[0];
-
-    // If required translate the mime type.
-    if (isset(self::$mimeTypeTranslate[$mimeType]))
-    {
-      $mimeType = self::$mimeTypeTranslate[$mimeType];
-    }
-
-    return $mimeType;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------

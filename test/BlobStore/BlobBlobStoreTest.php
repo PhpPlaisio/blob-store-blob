@@ -29,7 +29,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
     }
     else
     {
-      $blb_id = $store->putString(file_get_contents(__FILE__), basename(__FILE__), 'application/x-php');
+      $blb_id = $store->putString(file_get_contents(__FILE__), basename(__FILE__));
     }
 
     // Search by MD5 hash must give 1 row.
@@ -128,11 +128,11 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
   {
     $store = new BlobBlobStore();
 
-    $blb_id = $store->putString('%PDF-1.1', 'test.pdf', 'application/x-pdf');
+    $blb_id = $store->putString('%PDF-1.1', 'test.pdf');
 
     $blob = $store->getMetadata($blb_id);
 
-    $this->assertSame('application/pdf', $blob['blb_mime_type']);
+    $this->assertStringStartsWith('application/pdf', $blob['blb_mime_type']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

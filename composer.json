@@ -11,14 +11,14 @@
   "require": {
     "php": ">=7.1.0",
     "setbased/abc": "^0.10.33",
-    "setbased/abc-blob-store": "^3.0.0",
+    "setbased/abc-blob-store": "^4.0.0",
     "setbased/helper-program-execution": "^1.0.0"
   },
   "require-dev": {
     "phing/phing": "^2.0.0",
     "phpunit/phpunit": "^7.0.0 || ^8.0.0",
     "setbased/abc-company-resolver-uni": "^2.0.0",
-    "setbased/php-stratum": "^0.9.62"
+    "setbased/php-stratum": "^0.9.72"
   },
   "autoload": {
     "psr-4": {
