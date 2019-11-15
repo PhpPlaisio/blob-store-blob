@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\BlobStore;
+namespace Plaisio\BlobStore;
 
-use SetBased\Abc\Abc;
+use Plaisio\Kernel\Nub;
 use SetBased\Helper\ProgramExecution;
 
 /**
@@ -32,7 +32,7 @@ class BlobBlobStore implements BlobStore
    */
   public function delBlob(int $blbId): void
   {
-    Abc::$DL->abcBlobDelBlob(Abc::$companyResolver->getCmpId(), $blbId);
+    Nub::$DL->abcBlobDelBlob(Nub::$companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getBlob(int $blbId): array
   {
-    return Abc::$DL->abcBlobGetBlob(Abc::$companyResolver->getCmpId(), $blbId);
+    return Nub::$DL->abcBlobGetBlob(Nub::$companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getMetadata(int $blbId): array
   {
-    return Abc::$DL->abcBlobGetMetadata(Abc::$companyResolver->getCmpId(), $blbId);
+    return Nub::$DL->abcBlobGetMetadata(Nub::$companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -102,9 +102,9 @@ class BlobBlobStore implements BlobStore
 
     $data = file_get_contents($path);
 
-    Abc::$DL->abcBlobInsertBlob(Abc::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
+    Nub::$DL->abcBlobInsertBlob(Nub::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
-    return Abc::$DL->abcBlobWorkaround();
+    return Nub::$DL->abcBlobWorkaround();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -118,9 +118,9 @@ class BlobBlobStore implements BlobStore
       $mimeType = $this->mimeTypeString($data);
     }
 
-    Abc::$DL->abcBlobInsertBlob(Abc::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
+    Nub::$DL->abcBlobInsertBlob(Nub::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
-    return Abc::$DL->abcBlobWorkaround();
+    return Nub::$DL->abcBlobWorkaround();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ class BlobBlobStore implements BlobStore
    */
   public function searchByMd5(string $md5): array
   {
-    return Abc::$DL->abcBlobGetMetadataByMd5(Abc::$companyResolver->getCmpId(), $md5);
+    return Nub::$DL->abcBlobGetMetadataByMd5(Nub::$companyResolver->getCmpId(), $md5);
   }
 }
 

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace SetBased\Abc\Test\BlobStore;
+namespace Plaisio\BlobStore\Test;
 
-use SetBased\Abc\Abc;
-use SetBased\Abc\BlobStore\BlobBlobStore;
-use SetBased\Abc\C;
-use SetBased\Abc\CompanyResolver\UniCompanyResolver;
+use Plaisio\BlobStore\BlobBlobStore;
+use Plaisio\C;
+use Plaisio\CompanyResolver\UniCompanyResolver;
+use Plaisio\Kernel\Nub;
 
 /**
  * Test cases for BlobBlobStore
@@ -98,7 +98,7 @@ class BlobBlobStoreTest extends BlobBlobStoreTestCase
     $store = new BlobBlobStore();
 
     $store->putFile(__FILE__, basename(__FILE__));
-    Abc::$companyResolver = new UniCompanyResolver(C::CMP_ID_ABC);
+    Nub::$companyResolver = new UniCompanyResolver(C::CMP_ID_ABC);
     $store->putFile(__FILE__, basename(__FILE__));
 
     $this->assertEquals($this->getBlobCount(), 2, 'ABC_BLOB');

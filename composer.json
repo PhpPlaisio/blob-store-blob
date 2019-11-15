@@ -1,34 +1,33 @@
 {
-  "name": "setbased/abc-blob-store-blob",
-  "description": "ABC-Framework: BLOB Store using BLOBs",
+  "name": "plaisio/blob-store-blob",
+  "description": "PhpPlaisio: BLOB Store using BLOBs",
   "keywords": [
-    "ABC-Framework",
-    "BLOB",
-    "Store"
+    "PhpPlaisio",
+    "BLOB-Store"
   ],
   "type": "library",
   "license": "MIT",
   "require": {
     "php": ">=7.1.0",
-    "setbased/abc": "^0.10.33",
-    "setbased/abc-blob-store": "^4.0.0",
+    "plaisio/kernel": "^1.0.0",
+    "plaisio/blob-store": "^5.0.0",
     "setbased/helper-program-execution": "^1.0.0"
   },
   "require-dev": {
     "phing/phing": "^2.0.0",
     "phpunit/phpunit": "^7.0.0 || ^8.0.0",
-    "setbased/abc-company-resolver-uni": "^2.0.0",
-    "setbased/php-stratum": "^4.0.0",
+    "plaisio/company-resolver-uni": "^3.0.0",
+    "setbased/php-stratum": "^5.0.0",
     "setbased/php-stratum-mysql": "^4.0.0"
   },
   "autoload": {
     "psr-4": {
-      "SetBased\\Abc\\": "src/"
+      "Plaisio\\BlobStore\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SetBased\\Abc\\Test\\": "test/"
+      "Plaisio\\BlobStore\\Test\\": "test/"
     },
     "classmap": [
       "test/C.php"
