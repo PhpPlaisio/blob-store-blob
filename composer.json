@@ -16,7 +16,7 @@
   "require-dev": {
     "phing/phing": "^2.0.0",
     "phpunit/phpunit": "^7.0.0 || ^8.0.0",
-    "plaisio/company-resolver-uni": "^3.0.0",
+    "plaisio/company-resolver-uni": "^1.0.0",
     "setbased/php-stratum": "^5.0.0",
     "setbased/php-stratum-mysql": "^4.0.0"
   },
