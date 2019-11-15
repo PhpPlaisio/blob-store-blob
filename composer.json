@@ -10,7 +10,7 @@
   "require": {
     "php": ">=7.1.0",
     "plaisio/kernel": "^1.0.0",
-    "plaisio/blob-store": "^5.0.0",
+    "plaisio/blob-store": "^1.0.0",
     "setbased/helper-program-execution": "^1.0.0"
   },
   "require-dev": {
