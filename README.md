@@ -31,3 +31,9 @@
 </tr>
 </tbody>
 </table>
+
+A concrete implementation of plaisio/blob-store using BLOBs.
+
+# License
+
+This project is licensed under the MIT license.
