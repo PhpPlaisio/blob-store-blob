@@ -1,12 +1,12 @@
 /.idea/
 /.phpunit.result.cache
 /bin/
-/doc/
-/vendor/
 /composer.lock
+/doc/
+/test/C.php
+/test/TestDataLayer.php
+/test/coverage.xml
 /test/etc/columns.txt
 /test/etc/routines.json
-/test/DataLayer.php
 /test/report/
-/test/C.php
-/test/coverage.xml
+/vendor/

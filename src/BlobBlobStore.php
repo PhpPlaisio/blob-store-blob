@@ -32,7 +32,7 @@ class BlobBlobStore implements BlobStore
    */
   public function delBlob(int $blbId): void
   {
-    Nub::$DL->abcBlobDelBlob(Nub::$companyResolver->getCmpId(), $blbId);
+    Nub::$nub->DL->abcBlobDelBlob(Nub::$nub->companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getBlob(int $blbId): array
   {
-    return Nub::$DL->abcBlobGetBlob(Nub::$companyResolver->getCmpId(), $blbId);
+    return Nub::$nub->DL->abcBlobGetBlob(Nub::$nub->companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getMetadata(int $blbId): array
   {
-    return Nub::$DL->abcBlobGetMetadata(Nub::$companyResolver->getCmpId(), $blbId);
+    return Nub::$nub->DL->abcBlobGetMetadata(Nub::$nub->companyResolver->getCmpId(), $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -59,11 +59,9 @@ class BlobBlobStore implements BlobStore
    */
   public function mimeTypePath(string $path): string
   {
-    list($output) = ProgramExecution::exec1([self::$filePath, '-ib', $path], [0], true);
+    [$output] = ProgramExecution::exec1([self::$filePath, '-ib', $path], [0], true);
 
-    $mimeType = $output[0];
-
-    return $mimeType;
+    return $output[0];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -102,9 +100,9 @@ class BlobBlobStore implements BlobStore
 
     $data = file_get_contents($path);
 
-    Nub::$DL->abcBlobInsertBlob(Nub::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
+    Nub::$nub->DL->abcBlobInsertBlob(Nub::$nub->companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
-    return Nub::$DL->abcBlobWorkaround();
+    return Nub::$nub->DL->abcBlobWorkaround();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -118,9 +116,9 @@ class BlobBlobStore implements BlobStore
       $mimeType = $this->mimeTypeString($data);
     }
 
-    Nub::$DL->abcBlobInsertBlob(Nub::$companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
+    Nub::$nub->DL->abcBlobInsertBlob(Nub::$nub->companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
 
-    return Nub::$DL->abcBlobWorkaround();
+    return Nub::$nub->DL->abcBlobWorkaround();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -129,7 +127,7 @@ class BlobBlobStore implements BlobStore
    */
   public function searchByMd5(string $md5): array
   {
-    return Nub::$DL->abcBlobGetMetadataByMd5(Nub::$companyResolver->getCmpId(), $md5);
+    return Nub::$nub->DL->abcBlobGetMetadataByMd5(Nub::$nub->companyResolver->getCmpId(), $md5);
   }
 }
 

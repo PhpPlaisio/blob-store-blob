@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Plaisio\BlobStore\Test;
 
 use PHPUnit\Framework\TestCase;
-use Plaisio\C;
-use Plaisio\CompanyResolver\UniCompanyResolver;
 use Plaisio\Kernel\Nub;
 
 /**
@@ -15,11 +13,19 @@ class BlobBlobStoreTestCase extends TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * The kernel.
+   *
+   * @var Nub
+   */
+  protected $kernel;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the number of rows in table ABC_BLOB.
    */
   protected function getBlobCount(): int
   {
-    return Nub::$DL->executeSingleton1('select count(*) from `ABC_BLOB`');
+    return Nub::$nub->DL->executeSingleton1('select count(*) from `ABC_BLOB`');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -28,7 +34,7 @@ class BlobBlobStoreTestCase extends TestCase
    */
   protected function getBlobDataCount(): int
   {
-    return Nub::$DL->executeSingleton1('select count(*) from `ABC_BLOB_DATA`');
+    return Nub::$nub->DL->executeSingleton1('select count(*) from `ABC_BLOB_DATA`');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -37,15 +43,12 @@ class BlobBlobStoreTestCase extends TestCase
    */
   protected function setUp(): void
   {
-    Nub::$DL              = new DataLayer();
-    Nub::$companyResolver = new UniCompanyResolver(C::CMP_ID_SYS);
+    $this->kernel = new TestKernelSys();
 
-    Nub::$DL->connect('localhost', 'test', 'test', 'test');
-
-    Nub::$DL->executeNone('set foreign_key_checks = 0');
-    Nub::$DL->executeNone('truncate table `ABC_BLOB`');
-    Nub::$DL->executeNone('truncate table `ABC_BLOB_DATA`');
-    Nub::$DL->executeNone('set foreign_key_checks = 1');
+    Nub::$nub->DL->executeNone('set foreign_key_checks = 0');
+    Nub::$nub->DL->executeNone('truncate table `ABC_BLOB`');
+    Nub::$nub->DL->executeNone('truncate table `ABC_BLOB_DATA`');
+    Nub::$nub->DL->executeNone('set foreign_key_checks = 1');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -54,7 +57,7 @@ class BlobBlobStoreTestCase extends TestCase
    */
   protected function tearDown(): void
   {
-    Nub::$DL->disconnect();
+    Nub::$nub->DL->disconnect();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
