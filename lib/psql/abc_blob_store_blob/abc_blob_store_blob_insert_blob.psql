@@ -8,11 +8,11 @@
  * @param p_blb_timestamp The lats modification time of the BLOB. Defaults to now().
  * @param p_bdt_data      The actual BLOB.
  */
-create procedure abc_blob_insert_blob( in p_cmp_id        @abc_blob.cmp_id%type@,
-                                       in p_blb_filename  @abc_blob.blb_filename%type@,
-                                       in p_blb_mime_type @abc_blob.blb_mime_type%type@,
-                                       in p_blb_timestamp @abc_blob.blb_timestamp%type@,
-                                       in p_bdt_data      @abc_blob_data.bdt_data%type@ )
+create procedure abc_blob_store_blob_insert_blob(in p_cmp_id        @abc_blob.cmp_id%type@,
+                                                 in p_blb_filename  @abc_blob.blb_filename%type@,
+                                                 in p_blb_mime_type @abc_blob.blb_mime_type%type@,
+                                                 in p_blb_timestamp @abc_blob.blb_timestamp%type@,
+                                                 in p_bdt_data      @abc_blob_data.bdt_data%type@)
 modifies sql data
 -- type: none
 begin
@@ -90,6 +90,6 @@ begin
   ;
 
   -- select last_insert_id() blb_id;
-  -- Retrieve blb_id using abc_blob_workaround.
+  -- Retrieve blb_id using abc_blob_store_blob_workaround.
   set @blb_id = last_insert_id();
 end

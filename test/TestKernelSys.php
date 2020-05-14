@@ -3,24 +3,27 @@ declare(strict_types=1);
 
 namespace Plaisio\BlobStore\Test;
 
+use Plaisio\BlobStore\BlobBlobStore;
 use Plaisio\C;
 use Plaisio\CompanyResolver\CompanyResolver;
 use Plaisio\CompanyResolver\UniCompanyResolver;
-use Plaisio\Kernel\Nub;
+use Plaisio\PlaisioKernel;
 use SetBased\Stratum\MySql\MySqlDefaultConnector;
 
 /**
  * Kernel for testing purposes.
  */
-class TestKernelSys extends Nub
+class TestKernelSys extends PlaisioKernel
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
+   * Returns the BLOB store object.
+   *
+   * @return BlobBlobStore
    */
-  public function __construct()
+  public function getBlob(): BlobBlobStore
   {
-    parent::__construct();
+    return new BlobBlobStore($this);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -29,7 +32,7 @@ class TestKernelSys extends Nub
    *
    * @return CompanyResolver
    */
-  public function getCompanyResolver(): CompanyResolver
+  public function getCompany(): CompanyResolver
   {
     return new UniCompanyResolver(C::CMP_ID_SYS);
   }

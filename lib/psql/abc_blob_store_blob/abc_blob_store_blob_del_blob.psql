@@ -4,8 +4,8 @@
  * @param p_cmp_id The ID of the company (safeguard).
  * @param p_blb_id The ID of the BLOB.
  */
-create procedure abc_blob_del_blob( in p_cmp_id @abc_blob.cmp_id%type@,
-                                    in p_blb_id @abc_blob.blb_id%type@ )
+create procedure abc_blob_store_blob_del_blob(in p_cmp_id @abc_blob.cmp_id%type@,
+                                              in p_blb_id @abc_blob.blb_id%type@)
 modifies sql data
 -- type: none
 begin

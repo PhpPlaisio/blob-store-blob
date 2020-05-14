@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Plaisio\BlobStore\Test;
 
 use PHPUnit\Framework\TestCase;
-use Plaisio\Kernel\Nub;
+use Plaisio\PlaisioKernel;
 
 /**
  * Parent class for test cases for BlobBlobStore.
@@ -15,7 +15,7 @@ class BlobBlobStoreTestCase extends TestCase
   /**
    * The kernel.
    *
-   * @var Nub
+   * @var PlaisioKernel
    */
   protected $kernel;
 
@@ -25,7 +25,7 @@ class BlobBlobStoreTestCase extends TestCase
    */
   protected function getBlobCount(): int
   {
-    return Nub::$nub->DL->executeSingleton1('select count(*) from `ABC_BLOB`');
+    return $this->kernel->DL->executeSingleton1('select count(*) from `ABC_BLOB`');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class BlobBlobStoreTestCase extends TestCase
    */
   protected function getBlobDataCount(): int
   {
-    return Nub::$nub->DL->executeSingleton1('select count(*) from `ABC_BLOB_DATA`');
+    return $this->kernel->DL->executeSingleton1('select count(*) from `ABC_BLOB_DATA`');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -45,10 +45,10 @@ class BlobBlobStoreTestCase extends TestCase
   {
     $this->kernel = new TestKernelSys();
 
-    Nub::$nub->DL->executeNone('set foreign_key_checks = 0');
-    Nub::$nub->DL->executeNone('truncate table `ABC_BLOB`');
-    Nub::$nub->DL->executeNone('truncate table `ABC_BLOB_DATA`');
-    Nub::$nub->DL->executeNone('set foreign_key_checks = 1');
+    $this->kernel->DL->executeNone('set foreign_key_checks = 0');
+    $this->kernel->DL->executeNone('truncate table `ABC_BLOB`');
+    $this->kernel->DL->executeNone('truncate table `ABC_BLOB_DATA`');
+    $this->kernel->DL->executeNone('set foreign_key_checks = 1');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class BlobBlobStoreTestCase extends TestCase
    */
   protected function tearDown(): void
   {
-    Nub::$nub->DL->disconnect();
+    $this->kernel->DL->disconnect();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

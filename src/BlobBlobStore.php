@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Plaisio\BlobStore;
 
-use Plaisio\Kernel\Nub;
+use Plaisio\PlaisioObject;
 use SetBased\Helper\ProgramExecution;
 
 /**
  * Class for storing BLOBs (i.e. files, documents, images, data) as BLOBs in the database.
  */
-class BlobBlobStore implements BlobStore
+class BlobBlobStore extends PlaisioObject implements BlobStore
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -32,7 +32,7 @@ class BlobBlobStore implements BlobStore
    */
   public function delBlob(int $blbId): void
   {
-    Nub::$nub->DL->abcBlobDelBlob(Nub::$nub->companyResolver->getCmpId(), $blbId);
+    $this->nub->DL->abcBlobStoreBlobDelBlob($this->nub->company->cmpId, $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getBlob(int $blbId): array
   {
-    return Nub::$nub->DL->abcBlobGetBlob(Nub::$nub->companyResolver->getCmpId(), $blbId);
+    return $this->nub->DL->abcBlobStoreBlobGetBlob($this->nub->company->cmpId, $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class BlobBlobStore implements BlobStore
    */
   public function getMetadata(int $blbId): array
   {
-    return Nub::$nub->DL->abcBlobGetMetadata(Nub::$nub->companyResolver->getCmpId(), $blbId);
+    return $this->nub->DL->abcBlobStoreBlobGetMetadata($this->nub->company->cmpId, $blbId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -100,9 +100,9 @@ class BlobBlobStore implements BlobStore
 
     $data = file_get_contents($path);
 
-    Nub::$nub->DL->abcBlobInsertBlob(Nub::$nub->companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
+    $this->nub->DL->abcBlobStoreBlobInsertBlob($this->nub->company->cmpId, $filename, $mimeType, $timestamp, $data);
 
-    return Nub::$nub->DL->abcBlobWorkaround();
+    return $this->nub->DL->abcBlobStoreBlobWorkaround();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -116,9 +116,9 @@ class BlobBlobStore implements BlobStore
       $mimeType = $this->mimeTypeString($data);
     }
 
-    Nub::$nub->DL->abcBlobInsertBlob(Nub::$nub->companyResolver->getCmpId(), $filename, $mimeType, $timestamp, $data);
+    $this->nub->DL->abcBlobStoreBlobInsertBlob($this->nub->company->cmpId, $filename, $mimeType, $timestamp, $data);
 
-    return Nub::$nub->DL->abcBlobWorkaround();
+    return $this->nub->DL->abcBlobStoreBlobWorkaround();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ class BlobBlobStore implements BlobStore
    */
   public function searchByMd5(string $md5): array
   {
-    return Nub::$nub->DL->abcBlobGetMetadataByMd5(Nub::$nub->companyResolver->getCmpId(), $md5);
+    return $this->nub->DL->abcBlobStoreBlobGetMetadataByMd5($this->nub->company->cmpId, $md5);
   }
 }
 

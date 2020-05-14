@@ -3,7 +3,6 @@
 /bin/
 /composer.lock
 /doc/
-/test/C.php
 /test/TestDataLayer.php
 /test/coverage.xml
 /test/etc/columns.txt
