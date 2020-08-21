@@ -1,11 +1,11 @@
 /*================================================================================*/
 /* DDL SCRIPT                                                                     */
 /*================================================================================*/
-/*  Title    : ABC-Framework: BLOB Store using BLOBs                              */
-/*  FileName : abc-blob-store-blob.ecm                                            */
+/*  Title    : Plaisio: BLOB Store using BLOBs                                    */
+/*  FileName : blob-store-blob.ecm                                                */
 /*  Platform : MySQL 5.6                                                          */
 /*  Version  :                                                                    */
-/*  Date     : zaterdag 25 november 2017                                          */
+/*  Date     : vrijdag 21 augustus 2020                                           */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -40,7 +40,7 @@ CREATE TABLE `ABC_BLOB` (
   `blb_size` INT UNSIGNED NOT NULL,
   `blb_md5` BINARY(16) NOT NULL,
   `blb_filename` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `blb_mime_type` VARCHAR(48) NOT NULL,
+  `blb_mime_type` VARCHAR(100) NOT NULL,
   `blb_timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`blb_id`)
 );
