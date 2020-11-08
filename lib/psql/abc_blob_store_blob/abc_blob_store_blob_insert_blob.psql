@@ -7,6 +7,8 @@
  * @param p_blb_mime_type The mime type of the BLOB.
  * @param p_blb_timestamp The lats modification time of the BLOB. Defaults to now().
  * @param p_bdt_data      The actual BLOB.
+ *
+ * @type none
  */
 create procedure abc_blob_store_blob_insert_blob(in p_cmp_id        @abc_blob.cmp_id%type@,
                                                  in p_blb_filename  @abc_blob.blb_filename%type@,
@@ -14,7 +16,6 @@ create procedure abc_blob_store_blob_insert_blob(in p_cmp_id        @abc_blob.cm
                                                  in p_blb_timestamp @abc_blob.blb_timestamp%type@,
                                                  in p_bdt_data      @abc_blob_data.bdt_data%type@)
 modifies sql data
--- type: none
 begin
   declare l_done     boolean;
   declare l_blb_id   @abc_blob.blb_id%type@;

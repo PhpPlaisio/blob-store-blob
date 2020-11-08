@@ -3,11 +3,12 @@
  *
  * @param p_cmp_id  The ID of the company (safeguard).
  * @param p_blb_md5 The MD5 hash.
+ *
+ * @type rows
  */
 create procedure abc_blob_store_blob_get_metadata_by_md5(in p_cmp_id  @abc_blob.cmp_id%type@,
                                                          in p_blb_md5 varchar(32))
 reads sql data
--- type: rows
 begin
   select blb_id
   ,      hex(blb_md5)   blb_md5

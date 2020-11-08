@@ -3,11 +3,12 @@
  *
  * @param p_cmp_id The ID of the company (safeguard).
  * @param p_blb_id The ID of the BLOB.
+ *
+ * @type row1
  */
 create procedure abc_blob_store_blob_get_blob(in p_cmp_id @abc_blob.cmp_id%type@,
                                               in p_blb_id @abc_blob.blb_id%type@)
 reads sql data
--- type: row1
 begin
   select blb.blb_id
   ,      hex(blb.blb_md5)          blb_md5
