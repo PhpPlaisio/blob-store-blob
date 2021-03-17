@@ -5,7 +5,7 @@
 /*  FileName : blob-store-blob.ecm                                                */
 /*  Platform : MySQL 5.6                                                          */
 /*  Version  :                                                                    */
-/*  Date     : vrijdag 21 augustus 2020                                           */
+/*  Date     : woensdag 17 maart 2021                                             */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -39,7 +39,7 @@ CREATE TABLE `ABC_BLOB` (
   `bdt_id` INT UNSIGNED NOT NULL,
   `blb_size` INT UNSIGNED NOT NULL,
   `blb_md5` BINARY(16) NOT NULL,
-  `blb_filename` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `blb_filename` VARCHAR(255) NOT NULL,
   `blb_mime_type` VARCHAR(100) NOT NULL,
   `blb_timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`blb_id`)
@@ -91,3 +91,4 @@ CREATE INDEX `IX_FK_ABC_BLOB1` ON `ABC_BLOB` (`bdt_id`);
 ALTER TABLE `ABC_BLOB`
   ADD CONSTRAINT `FK_ABC_BLOB_AUT_COMPANY`
   FOREIGN KEY (`cmp_id`) REFERENCES `ABC_AUTH_COMPANY` (`cmp_id`);
+
