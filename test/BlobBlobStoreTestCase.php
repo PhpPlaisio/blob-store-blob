@@ -17,7 +17,7 @@ class BlobBlobStoreTestCase extends TestCase
    *
    * @var PlaisioKernel
    */
-  protected $kernel;
+  protected PlaisioKernel $kernel;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

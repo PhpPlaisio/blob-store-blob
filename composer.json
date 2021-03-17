@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=7.3",
+    "php": ">=7.4",
     "plaisio/blob-store": "^1.2.0",
     "plaisio/company-resolver": "^2.0.0",
     "plaisio/kernel": "^3.1.1",

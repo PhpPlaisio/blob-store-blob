@@ -17,14 +17,14 @@ class BlobBlobStore extends PlaisioObject implements BlobStore
    *
    * @var string
    */
-  public static $filePath = '/usr/bin/file';
+  public static string $filePath = '/usr/bin/file';
 
   /**
    * Directory for storing temporary files. If null sys_get_temp_dir() will be used.
    *
-   * @var ?string
+   * @var string|null
    */
-  public static $tmpDir = null;
+  public static ?string $tmpDir = null;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
