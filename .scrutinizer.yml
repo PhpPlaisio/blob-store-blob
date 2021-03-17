@@ -6,6 +6,7 @@ filter:
 
 build:
   environment:
+    mysql: 5.7
     php:
       version: '7.4'
       pecl_extensions:
