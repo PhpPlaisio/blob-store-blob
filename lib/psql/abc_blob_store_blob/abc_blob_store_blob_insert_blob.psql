@@ -10,85 +10,81 @@
  *
  * @type none
  */
-create procedure abc_blob_store_blob_insert_blob(in p_cmp_id        @abc_blob.cmp_id%type@,
-                                                 in p_blb_filename  @abc_blob.blb_filename%type@,
-                                                 in p_blb_mime_type @abc_blob.blb_mime_type%type@,
-                                                 in p_blb_timestamp @abc_blob.blb_timestamp%type@,
-                                                 in p_bdt_data      @abc_blob_data.bdt_data%type@)
-modifies sql data
+create procedure abc_blob_store_blob_insert_blob
+(
+  in p_cmp_id        smallint(5) unsigned, --               type: ABC_BLOB.cmp_id
+  in p_blb_filename  varchar(255) character set utf8mb4, -- type: ABC_BLOB.blb_filename
+  in p_blb_mime_type varchar(100) character set utf8mb4, -- type: ABC_BLOB.blb_mime_type
+  in p_blb_timestamp timestamp, --                          type: ABC_BLOB.blb_timestamp
+  in p_bdt_data      longblob --                            type: ABC_BLOB_DATA.bdt_data
+)
+  modifies sql data
 begin
-  declare l_done     boolean;
-  declare l_blb_id   @abc_blob.blb_id%type@;
-  declare l_bdt_id   @abc_blob.bdt_id%type@;
-  declare l_blb_md5  @abc_blob.blb_md5%type@;
-  declare l_blb_size @abc_blob.blb_size%type@;
-  declare l_bdt_data @abc_blob_data.bdt_data%type@;
+  declare l_done boolean;
+  declare l_blb_id int(10) unsigned; --   type: ABC_BLOB.blb_id
+  declare l_bdt_id int(10) unsigned; --   type: ABC_BLOB.bdt_id
+  declare l_blb_md5 binary(16); --        type: ABC_BLOB.blb_md5
+  declare l_blb_size int(10) unsigned; -- type: ABC_BLOB.blb_size
+  declare l_bdt_data longblob; --         type: ABC_BLOB_DATA.bdt_data
 
-  declare c_data cursor
-  for
-  select bdt_id
-  ,      bdt_data
-  from   ABC_BLOB_DATA
-  where  cmp_id  = p_cmp_id
-  and    bdt_md5 = l_blb_md5
-  ;
+  declare c_data cursor for select bdt_id
+                                 , bdt_data
+                            from ABC_BLOB_DATA
+                            where cmp_id = p_cmp_id
+                              and bdt_md5 = l_blb_md5;
 
   declare continue handler for sqlstate '02000' set l_done = true;
 
-  set l_blb_md5  = unhex(md5(p_bdt_data));
+  set l_blb_md5 = unhex(md5(p_bdt_data));
   set l_blb_size = length(p_bdt_data);
 
-  if (l_blb_size=0) then
-    call abc_misc_raise_exception( 'Size of '''||p_blb_filename||''' is zero.' );
+  if (l_blb_size = 0) then
+    call abc_misc_raise_exception('Size of ''' || p_blb_filename || ''' is zero.');
   end if;
 
   -- Search for BLOB data equal to p_bdt_data.
   open c_data;
-  loop1: loop
+  loop1:
+  loop
     set l_done = false;
-    fetch c_data
-    into  l_bdt_id
-    ,     l_bdt_data
-    ;
+    fetch c_data into l_bdt_id , l_bdt_data;
     if (l_done) then
       close c_data;
       leave loop1;
     end if;
 
-    if (p_bdt_data=l_bdt_data) then
+    if (p_bdt_data = l_bdt_data) then
       close c_data;
       leave loop1;
     end if;
   end loop;
 
-  if (l_done=true) then
+  if (l_done = true) then
     -- We left the loop without finding a matching BLOB.
     insert into ABC_BLOB_DATA( cmp_id
-    ,                          bdt_md5
-    ,                          bdt_data )
-    values( p_cmp_id
-    ,       l_blb_md5
-    ,       p_bdt_data )
-    ;
+                             , bdt_md5
+                             , bdt_data )
+    values ( p_cmp_id
+           , l_blb_md5
+           , p_bdt_data );
 
     set l_bdt_id = last_insert_id();
   end if;
 
   insert into ABC_BLOB( cmp_id
-  ,                     bdt_id
-  ,                     blb_md5
-  ,                     blb_size
-  ,                     blb_mime_type
-  ,                     blb_filename
-  ,                     blb_timestamp )
-  values( p_cmp_id
-  ,       l_bdt_id
-  ,       l_blb_md5
-  ,       l_blb_size
-  ,       p_blb_mime_type
-  ,       p_blb_filename
-  ,       ifnull(p_blb_timestamp, now()) )
-  ;
+                      , bdt_id
+                      , blb_md5
+                      , blb_size
+                      , blb_mime_type
+                      , blb_filename
+                      , blb_timestamp )
+  values ( p_cmp_id
+         , l_bdt_id
+         , l_blb_md5
+         , l_blb_size
+         , p_blb_mime_type
+         , p_blb_filename
+         , ifnull(p_blb_timestamp, now()) );
 
   -- select last_insert_id() blb_id;
   -- Retrieve blb_id using abc_blob_store_blob_workaround.

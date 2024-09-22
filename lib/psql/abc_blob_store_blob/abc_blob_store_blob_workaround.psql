@@ -1,12 +1,10 @@
 /**
  * Work-a-round for bug with loop and BLOB in PHP for retrieving blb_id.
  *
- * @type singleton1
- *
- * @return int
+ * @type singleton1 int
  */
-create procedure abc_blob_store_blob_workaround()
-modifies sql data
+create procedure abc_blob_store_blob_workaround ()
+  modifies sql data
 begin
   select @blb_id;
 end
